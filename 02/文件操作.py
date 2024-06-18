@@ -9,8 +9,8 @@ open(文件路劲，mode = “”， encoding = “”)
         ../   返回上一级
 mode:
     r: read 读取文件
-    w： write 写
-    a: append 追加写入
+    w： write 写 (只写模式，重新创建文件)
+    a: append 追加写入 (追加写，如果文件不存在，创建文件，如果文件存在不会重建文件。)
     b: 读写的是非文本文件 -> bytes
 with: 上下文  不需要手动的去关闭掉一个文件
 """
@@ -78,21 +78,36 @@ with: 上下文  不需要手动的去关闭掉一个文件
 #         f2.write(item)
 
 
-import os # 和操作系统相关的模块引入
-import time # 和时间相关的模块导入
-# 文件修改 把姓大的改成姓小的
-with (open("奥特曼大合集",mode="r",encoding="utf-8") as s,
-      open("123.txt",mode="w",encoding="utf-8") as n):
-    for item in s:
-        item = item.strip() # 去掉空格,!!!!!字符串必须重新赋值，不然不会发生改变
-        if item.startswith("大"):
-            # item = item.replace("大","小") # 另一种修改方式
-            item = "小" + item[1:]
-        item = item + "\n"
-        n.write(item)
-time.sleep(5)  # 让程序休眠3秒
-# 删除原文件
-os.remove("奥特曼大合集")
-time.sleep(5)
-# 文件重命名
-os.rename("123.txt","奥特曼大合集")
+# import os # 和操作系统相关的模块引入
+# import time # 和时间相关的模块导入
+# # 文件修改 把文件里面的啊改成不啊
+# with (open("奥特曼大合集",mode="r",encoding="utf-8") as s,
+#       open("123.txt",mode="w",encoding="utf-8") as n):
+#     for item in s:
+#         item = item.strip() # 去掉空格,!!!!!字符串必须重新赋值，不然不会发生改变
+#         if "啊" in item:
+#             item = item.replace("啊","不啊")
+#             # 如果文件里面的哪一行里面有啊的话就换成---不啊
+#         item = item + "\n"
+#         n.write(item)
+# time.sleep(5)  # 让程序休眠3秒
+# # 删除原文件
+# os.remove("奥特曼大合集")
+# time.sleep(5)
+# # 文件重命名
+# os.rename("123.txt","奥特曼大合集")
+
+# 规则文件的操作
+f = open('规则文件.txt',mode='r',encoding='utf-8')
+head_line = f.readline()
+head_line = head_line.split() # 默认的split用的空白切割
+print(head_line)
+lst = []
+for item in f:
+    # item = item.strip()
+    item = item.split()
+    dic = {}
+    for i in range(len(head_line)):
+        dic[head_line[i]] = item[i] # 创建字典内容
+        lst.append(dic)
+print(lst)

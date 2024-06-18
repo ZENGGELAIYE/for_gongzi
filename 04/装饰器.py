@@ -130,6 +130,6 @@ def delet():
 def search():
     print("查找用户信息")
 
-add()
-delet()
-search()
+print(add()) 
+# delet()
+# search()
